@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ArrowRight, ArrowLeft, Anchor, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { CustomizeInput } from './customize-input'
 import { cn } from '@/lib/utils'
 import type { Anchor as AnchorType, AnchorCandidate } from '@/types'
 
@@ -13,6 +14,7 @@ interface AnchorsStepProps {
   onSelectAnchor: (chunkIndex: number, candidate: AnchorCandidate) => void
   onConfirm: () => void
   onBack: () => void
+  onCustomize: (customInstructions: string) => Promise<void>
   loading?: boolean
 }
 
@@ -22,6 +24,7 @@ export function AnchorsStep({
   onSelectAnchor,
   onConfirm,
   onBack,
+  onCustomize,
   loading,
 }: AnchorsStepProps) {
   const allSelected = chunks.every((_, i) =>
@@ -37,6 +40,15 @@ export function AnchorsStep({
         <p className="text-gray-500 text-sm">
           Choose the best sound-alike word for each chunk
         </p>
+      </div>
+
+      <div className="mb-4">
+        <CustomizeInput
+          placeholder="e.g., 'Use more colorful objects' or 'Prefer animals over objects'"
+          onSubmit={onCustomize}
+          loading={loading}
+          label="Customize Anchors"
+        />
       </div>
 
       <div className="space-y-4 mb-6">

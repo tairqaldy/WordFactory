@@ -3,6 +3,7 @@
 import { ArrowRight, ArrowLeft, Image as ImageIcon, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { CustomizeInput } from './customize-input'
 import { Spinner } from '@/components/ui/spinner'
 
 interface ImageStepProps {
@@ -10,6 +11,7 @@ interface ImageStepProps {
   imagePrompt: string
   generating: boolean
   onRegenerate: () => void
+  onCustomize: (customInstructions: string) => Promise<void>
   onConfirm: () => void
   onBack: () => void
   loading?: boolean
@@ -20,6 +22,7 @@ export function ImageStep({
   imagePrompt,
   generating,
   onRegenerate,
+  onCustomize,
   onConfirm,
   onBack,
   loading,
@@ -33,6 +36,15 @@ export function ImageStep({
         <p className="text-gray-500 text-sm">
           Visual scene to help you remember
         </p>
+      </div>
+
+      <div className="mb-4">
+        <CustomizeInput
+          placeholder="e.g., 'Make it more vibrant' or 'Add more detail to the background'"
+          onSubmit={onCustomize}
+          loading={loading || generating}
+          label="Customize Image"
+        />
       </div>
 
       <Card className="p-4 mb-6">

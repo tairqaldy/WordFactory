@@ -3,17 +3,21 @@
 import { ArrowRight, ArrowLeft, Puzzle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { CustomizeInput } from './customize-input'
 import type { Phonetics } from '@/types'
 
 interface ChunkingStepProps {
   word: string
   phonetics: Phonetics
+  learningLanguage: string
+  nativeLanguage: string
   onConfirm: () => void
   onBack: () => void
+  onCustomize: (customInstructions: string) => Promise<void>
   loading?: boolean
 }
 
-export function ChunkingStep({ word, phonetics, onConfirm, onBack, loading }: ChunkingStepProps) {
+export function ChunkingStep({ word, phonetics, learningLanguage, nativeLanguage, onConfirm, onBack, onCustomize, loading }: ChunkingStepProps) {
   return (
     <div className="flex-1 flex flex-col">
       <div className="text-center mb-6">
@@ -25,7 +29,7 @@ export function ChunkingStep({ word, phonetics, onConfirm, onBack, loading }: Ch
         </p>
       </div>
 
-      <Card className="p-5 mb-6">
+      <Card className="p-5 mb-4">
         <div className="text-center mb-4">
           <p className="text-2xl font-bold text-gray-900 tracking-wide">
             {word}
@@ -52,10 +56,19 @@ export function ChunkingStep({ word, phonetics, onConfirm, onBack, loading }: Ch
         </div>
       </Card>
 
-      <div className="bg-blue-50 rounded-xl p-4 mb-6">
+      <div className="bg-blue-50 rounded-xl p-4 mb-4">
         <p className="text-sm text-blue-700">
           Each chunk will get a sound-alike word in your native language to create memorable associations.
         </p>
+      </div>
+
+      <div className="mb-4">
+        <CustomizeInput
+          placeholder="e.g., 'Split into 2 chunks instead of 3' or 'Make chunks more distinct'"
+          onSubmit={onCustomize}
+          loading={loading}
+          label="Customize Chunks"
+        />
       </div>
 
       <div className="flex gap-3 mt-auto">

@@ -3,6 +3,7 @@
 import { ArrowRight, ArrowLeft, Image as ImageIcon, Link2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { CustomizeInput } from './customize-input'
 import type { Scene, Anchor } from '@/types'
 
 interface SceneStepProps {
@@ -10,10 +11,11 @@ interface SceneStepProps {
   anchors: Anchor[]
   onConfirm: () => void
   onBack: () => void
+  onCustomize: (customInstructions: string) => Promise<void>
   loading?: boolean
 }
 
-export function SceneStep({ scene, anchors, onConfirm, onBack, loading }: SceneStepProps) {
+export function SceneStep({ scene, anchors, onConfirm, onBack, onCustomize, loading }: SceneStepProps) {
   return (
     <div className="flex-1 flex flex-col">
       <div className="text-center mb-6">
@@ -23,6 +25,15 @@ export function SceneStep({ scene, anchors, onConfirm, onBack, loading }: SceneS
         <p className="text-gray-500 text-sm">
           Review the mnemonic scene structure
         </p>
+      </div>
+
+      <div className="mb-4">
+        <CustomizeInput
+          placeholder="e.g., 'Make it more colorful' or 'Add a background scene'"
+          onSubmit={onCustomize}
+          loading={loading}
+          label="Customize Scene"
+        />
       </div>
 
       <Card className="p-5 mb-6">
