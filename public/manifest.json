@@ -1,24 +1,41 @@
 {
   "name": "WordFactory - Learn with Mnemonics",
   "short_name": "WordFactory",
-  "description": "Create mnemonic flashcards to master vocabulary",
+  "description": "Create mnemonic flashcards to master vocabulary with AI-powered visual associations",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f8fafc",
   "theme_color": "#2563eb",
   "orientation": "portrait",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["education", "productivity"],
   "icons": [
     {
       "src": "/icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
