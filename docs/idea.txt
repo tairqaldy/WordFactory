@@ -1,0 +1,11 @@
+with what i want to create a platform in which users will be able to create their own mnemonics cards for language learning (user can join language that they want to learn during the registration onboarding and from which language to come up with associations. Also AI with algorithm that we already have will come up with innitial associations and confirm them with the user before starting all of the other steps. User can customize selection of association through field with which user can interact with deffierent stages in application.) So making a step-by-step creation with user confirmation after every step is crusial (as for cost managing AND learning purpuses) will start and test to learning English with Russian associations BUT we should prepare DB for functionality of how it is intended for future.
+
+tech stack:
+bun package manager
+next.js
+react
+pwa (mobile resposive design primarly)
+supabase postgreSQL
+gemini API and NanoBanana img generation
+vercel hosting
+suggest if something should be changed or added
