@@ -71,10 +71,21 @@ Only return valid JSON, no additional text.`
     const data = parseJsonResponse<{ candidates: { chunk: string; candidates: AnchorCandidate[] }[] }>(text)
 
     return NextResponse.json(data)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error generating anchors:', error)
+    
+    if (error?.status === 403 || error?.message?.includes('SERVICE_DISABLED')) {
+      return NextResponse.json(
+        { 
+          error: 'Generative Language API is not enabled. Please enable it in Google Cloud Console.',
+          details: error.message
+        },
+        { status: 503 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to generate anchors' },
+      { error: 'Failed to generate anchors', details: error?.message || 'Unknown error' },
       { status: 500 }
     )
   }

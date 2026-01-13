@@ -278,7 +278,7 @@ export function LearnFlow({ dueCount, cardsToReview }: LearnFlowProps) {
               onClick={() => handleRating('hard')}
               disabled={loading}
             >
-              <span className="text-lg mb-1">??</span>
+              <span className="text-lg mb-1">😓</span>
               <span className="text-xs">Hard</span>
             </Button>
             <Button
@@ -296,7 +296,7 @@ export function LearnFlow({ dueCount, cardsToReview }: LearnFlowProps) {
               onClick={() => handleRating('easy')}
               disabled={loading}
             >
-              <span className="text-lg mb-1">??</span>
+              <span className="text-lg mb-1">🚀</span>
               <span className="text-xs">Easy</span>
             </Button>
           </div>

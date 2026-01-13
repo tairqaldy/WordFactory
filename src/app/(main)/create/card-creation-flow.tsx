@@ -62,15 +62,16 @@ export function CardCreationFlow({ learningLanguage, nativeLanguage }: CardCreat
       })
 
       if (!response.ok) {
-        throw new Error('Failed to analyze word')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to analyze word')
       }
 
       const data = await response.json()
       setAnalysis(data.analysis)
       setPhonetics(data.phonetics)
       setStep('analysis')
-    } catch (err) {
-      setError('Failed to analyze word. Please try again.')
+    } catch (err: any) {
+      setError(err.message || 'Failed to analyze word. Please try again.')
       console.error(err)
     } finally {
       setLoading(false)
@@ -97,7 +98,8 @@ export function CardCreationFlow({ learningLanguage, nativeLanguage }: CardCreat
       })
 
       if (!response.ok) {
-        throw new Error('Failed to generate anchors')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to generate anchors')
       }
 
       const data = await response.json()
@@ -113,8 +115,8 @@ export function CardCreationFlow({ learningLanguage, nativeLanguage }: CardCreat
       setSelectedAnchors(autoSelected)
       
       setStep('anchors')
-    } catch (err) {
-      setError('Failed to generate anchors. Please try again.')
+    } catch (err: any) {
+      setError(err.message || 'Failed to generate anchors. Please try again.')
       console.error(err)
     } finally {
       setLoading(false)
@@ -151,15 +153,16 @@ export function CardCreationFlow({ learningLanguage, nativeLanguage }: CardCreat
       })
 
       if (!response.ok) {
-        throw new Error('Failed to build scene')
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.error || 'Failed to build scene')
       }
 
       const data = await response.json()
       setScene(data.scene)
       setImagePrompt(data.imagePrompt)
       setStep('bindings')
-    } catch (err) {
-      setError('Failed to build scene. Please try again.')
+    } catch (err: any) {
+      setError(err.message || 'Failed to build scene. Please try again.')
       console.error(err)
     } finally {
       setLoading(false)

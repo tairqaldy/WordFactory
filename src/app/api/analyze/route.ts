@@ -70,10 +70,22 @@ Only return valid JSON, no additional text.`
     const data = parseJsonResponse<{ analysis: WordAnalysis; phonetics: Phonetics }>(text)
 
     return NextResponse.json(data)
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error analyzing word:', error)
+    
+    // Check if it's an API not enabled error
+    if (error?.status === 403 || error?.message?.includes('SERVICE_DISABLED')) {
+      return NextResponse.json(
+        { 
+          error: 'Generative Language API is not enabled. Please enable it in Google Cloud Console: https://console.cloud.google.com/apis/api/generativelanguage.googleapis.com/overview',
+          details: error.message
+        },
+        { status: 503 }
+      )
+    }
+    
     return NextResponse.json(
-      { error: 'Failed to analyze word' },
+      { error: 'Failed to analyze word', details: error?.message || 'Unknown error' },
       { status: 500 }
     )
   }
