@@ -1,4 +1,23 @@
 import { createClient } from '@/lib/supabase/server'
+import { LearnFlow } from './learn-flow'
+
+interface CardWithProgress {
+  id: string
+  card_id: string
+  repetitions: number
+  ease_factor: number
+  interval_days: number
+  next_review: string
+  cards: {
+    id: string
+    word: string
+    pos: string
+    ipa: string
+    translation: string
+    image_url: string | null
+    example: string | null
+  }
+}
 
 export default async function LearnPage() {
   const supabase = await createClient()
@@ -12,34 +31,18 @@ export default async function LearnPage() {
     .select('*, cards(*)', { count: 'exact' })
     .eq('user_id', user.id)
     .lte('next_review', new Date().toISOString())
-    .limit(10)
+    .order('next_review', { ascending: true })
+    .limit(20)
 
   const dueCount = count || 0
+  const cardsToReview = (dueCards || []) as CardWithProgress[]
 
   return (
-    <div className="px-4 py-6">
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Learn</h1>
-      <p className="text-gray-500 mb-6">Review your cards with spaced repetition</p>
-      
-      <div className="bg-white rounded-2xl p-6 shadow-sm">
-        {dueCount > 0 ? (
-          <div className="text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-2xl font-bold text-blue-600">{dueCount}</span>
-            </div>
-            <p className="text-gray-900 font-medium mb-1">Cards to review</p>
-            <p className="text-gray-500 text-sm mb-4">Keep your memory fresh!</p>
-            <button className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-medium hover:bg-blue-700 transition-colors">
-              Start Review
-            </button>
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-500">No cards to review right now.</p>
-            <p className="text-gray-400 text-sm mt-1">Create some cards to get started!</p>
-          </div>
-        )}
-      </div>
+    <div className="min-h-[calc(100vh-5rem)] flex flex-col px-4 py-6">
+      <LearnFlow 
+        dueCount={dueCount}
+        cardsToReview={cardsToReview}
+      />
     </div>
   )
 }
